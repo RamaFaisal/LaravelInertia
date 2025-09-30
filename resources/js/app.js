@@ -2,7 +2,7 @@ import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
 
 createInertiaApp({
-    resolve: name => {
+    resolve: (name) => {
         const pages = import.meta.glob("./Pages/**/*.vue", { eager: true });
         return pages[`./Pages/${name}.vue`];
     },
@@ -10,5 +10,11 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .mount(el);
+    },
+    progress: {
+        delay: 250,
+        color: "#4B5563",
+        includeCSS: true,
+        showSpinner: true,
     },
 });
