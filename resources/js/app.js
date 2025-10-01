@@ -1,5 +1,6 @@
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
+import '../css/app.css';
 
 createInertiaApp({
     resolve: (name) => {
@@ -11,10 +12,10 @@ createInertiaApp({
             .use(plugin)
             .mount(el);
     },
-    progress: {
-        delay: 250,
-        color: "#4B5563",
-        includeCSS: true,
-        showSpinner: true,
-    },
+    // progress: {
+    //     delay: 250,
+    //     color: "#4B5563",
+    //     includeCSS: true,
+    //     showSpinner: true,
+    // },
 });
