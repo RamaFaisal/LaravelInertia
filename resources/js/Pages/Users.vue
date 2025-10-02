@@ -1,34 +1,41 @@
 <template>
-    <Layout>
-        <Head title="User Page" />
-        <div>
-            <h1 v-if="awesome">Users</h1>
-            <h1 v-else>Not User</h1>
+    <Head title="User" />
+    <div>
+        <h1>User Page</h1>
 
-            <button @click="awesome = !awesome">Toogle</button>
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="( user, index ) in users" :key="user.id">
+                    <td>{{ ++index }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-        <p class="mt-96">The current time is {{ time }}.</p>
-        <Link href="/users" class="text-blue-500" preserve-scroll>Refresh</Link>
-    </Layout>
+        <!-- <ul>
+            <li v-for="user in users" :key="user.id" v-text="user.name"></li>
+            <li v-for="user in users" :key="user.id" v-text="user.email"></li>
+        </ul> -->
+    </div>
 </template>
 
-<script>
+<script setup>
 import Layout from "../Shared/Layout.vue";
 import { Link, Head } from "@inertiajs/vue3";
-
-export default {
-    components: {
-        Layout,
-        Link, Head
-    },
-    props: {
-        time: String,
-    },
-};
-</script>
-
-<script setup>
 import { ref } from "vue";
 const awesome = ref(true);
+
+defineProps({
+    users: Array,
+});
+
+defineOptions({ layout: Layout });
 </script>

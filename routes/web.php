@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -9,14 +10,14 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return inertia('Welcome', [
-        'name' => 'John Doe',
+        'username' => 'John Doe',
         'frameworks' => ['Laravel', 'Vue', 'Inertia'],
     ]);
 });
 
 Route::get('/users', function () {
     return inertia('Users', [
-        'time' => now()->toTimeString()
+        'users' => User::all(),
     ]);
 });
 
@@ -31,4 +32,17 @@ Route::post('/logout', function () {
 
 Route::get('/test', function () {
     return inertia('Test');
+});
+
+// Cara Fajar
+// Route::inertia('/user-fajar', 'Student/All');
+Route::get('/user-fajar', function () {
+    $user = [
+        'name' => 'Ben',
+        'age' => 20
+    ];
+    // return Inertia::render('Student/All');
+    return inertia('Student/All', [
+        'user' => $user
+    ]);
 });

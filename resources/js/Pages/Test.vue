@@ -1,5 +1,6 @@
 <template>
     <Layout>
+        <Head title="Test Page" />
         <h1 class="mt-6">Test Page</h1>
 
         <h1>V-text Directive</h1>
@@ -30,6 +31,7 @@
 <script setup>
 import { ref } from "vue";
 import Layout from "../Shared/Layout.vue";
+import { Head } from "@inertiajs/vue3";
 
 const msg = "Uhuy";
 // const count = ref(0)
