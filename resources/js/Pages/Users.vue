@@ -1,40 +1,81 @@
 <template>
     <Head title="User" />
     <div>
-        <h1>User Page</h1>
+        <div class="mb-6 flex justify-between">
+            <h1 class="font-bold text-4xl">User Page</h1>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="( user, index ) in users" :key="user.id">
-                    <td>{{ ++index }}</td>
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.email }}</td>
-                </tr>
-            </tbody>
-        </table>
+            <input
+                type="text"
+                placeholder="Search..."
+                v-model="search"
+                class="border px-2 rounded-lg"
+            />
+        </div>
 
-        <!-- <ul>
-            <li v-for="user in users" :key="user.id" v-text="user.name"></li>
-            <li v-for="user in users" :key="user.id" v-text="user.email"></li>
-        </ul> -->
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table
+                class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+            >
+                <thead
+                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+                >
+                    <tr>
+                        <th scope="col" class="px-6 py-3">Username</th>
+                        <th scope="col" class="px-6 py-3">Email User</th>
+                        <th scope="col" class="px-6 py-3">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        v-for="user in users.data"
+                        :key="user.id"
+                        class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200"
+                    >
+                        <th
+                            scope="row"
+                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                            {{ user.name }}
+                        </th>
+                        <td class="px-6 py-4">{{ user.email }}</td>
+                        <td class="px-6 py-4">
+                            <Link
+                                :href="`/users/${user.id}/edit`"
+                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                >Edit</Link
+                            >
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+
+    <!-- Paginator -->
+    <Pagination :links="users.links" class="mt-6" />
 </template>
 
 <script setup>
 import Layout from "../Shared/Layout.vue";
-import { Link, Head } from "@inertiajs/vue3";
-import { ref } from "vue";
-const awesome = ref(true);
+import { Link, Head, router } from "@inertiajs/vue3";
+import { ref, watch } from "vue";
+import Pagination from "../Shared/Pagination.vue";
 
-defineProps({
-    users: Array,
+let props = defineProps({
+    users: Object,
+    filters: Object,
+});
+
+let search = ref(props.filters.search);
+
+watch(search, (value) => {
+    router.get(
+        "/users",
+        { search: value },
+        { preserveState: true },
+        { replace: true },
+        { preserveScroll: true }
+    );
 });
 
 defineOptions({ layout: Layout });
