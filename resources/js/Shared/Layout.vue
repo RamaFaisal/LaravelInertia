@@ -1,6 +1,6 @@
 <template>
-    <Head title="Inertia"/>
-    <meta name="description" content="Inertia">
+    <Head title="Inertia" />
+    <meta name="description" content="Inertia" />
     <section class="p-6 bg-gray-200">
         <header class="flex justify-between p-2">
             <div class="flex items-center">

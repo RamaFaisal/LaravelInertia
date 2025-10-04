@@ -4,12 +4,20 @@
         <div class="mb-6 flex justify-between">
             <h1 class="font-bold text-4xl">User Page</h1>
 
-            <input
-                type="text"
-                placeholder="Search..."
-                v-model="search"
-                class="border px-2 rounded-lg"
-            />
+            <div class="flex gap-2">
+                <Link
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    href="/users/create"
+                >
+                    New User
+                </Link>
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    v-model="search"
+                    class="border px-2 rounded-lg"
+                />
+            </div>
         </div>
 
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -56,10 +64,10 @@
 </template>
 
 <script setup>
-import Layout from "../Shared/Layout.vue";
 import { Link, Head, router } from "@inertiajs/vue3";
 import { ref, watch } from "vue";
-import Pagination from "../Shared/Pagination.vue";
+import Pagination from "../../Shared/Pagination.vue";
+import Layout from "../../Shared/Layout.vue";
 
 let props = defineProps({
     users: Object,
