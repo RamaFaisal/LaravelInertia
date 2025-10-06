@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\loginController;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
@@ -10,71 +12,72 @@ use Inertia\Inertia;
 //     return Inertia::render('Home');
 // });
 
-Route::get('/', function () {
-    return inertia('Welcome', [
-        'username' => 'John Doe',
-        'frameworks' => ['Laravel', 'Vue', 'Inertia'],
-    ]);
-});
+Route::get('/login', [loginController::class, 'create'])->name('login');
+Route::post('/login', [loginController::class, 'store']);
+Route::post('/logout', [loginController::class, 'destroy'])->middleware('auth');
 
-Route::get('/users', function () {
-    return Inertia::render('Users/Index', [
-        'users' => User::query()
-            ->when(Request::input('search'), function ($query, $search) {
-                $query->where('name', 'like', "%{$search}%");
-            })
-            ->latest()
-            ->paginate(10)
-            ->withQueryString()
-            ->through(fn($user) => [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email
-            ]),
-        'filters' => Request::only(['search'])
-    ]);
-});
+Route::middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return inertia('Welcome', [
+            'username' => Auth::user()->name,
+            'frameworks' => ['Laravel', 'Vue', 'Inertia'],
+        ]);
+    });
 
-Route::get('/users/create', function () {
-    return inertia('Users/Create');
-});
+    Route::get('/users', function () {
+        return Inertia::render('Users/Index', [
+            'users' => User::query()
+                ->when(Request::input('search'), function ($query, $search) {
+                    $query->where('name', 'like', "%{$search}%");
+                })
+                ->latest()
+                ->paginate(10)
+                ->withQueryString()
+                ->through(fn($user) => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email
+                ]),
+            'filters' => Request::only(['search'])
+        ]);
+    });
 
-Route::post('/users', function () {
-    $attribute = Request::validate([
-        'name' => 'required',
-        'email' => 'required|email',
-        'password' => 'required'
-    ]);
+    Route::get('/users/create', function () {
+        return inertia('Users/Create');
+    });
 
-    User::create($attribute);
+    Route::post('/users', function () {
+        $attribute = Request::validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
 
-    return redirect('/users');
-});
+        User::create($attribute);
 
-Route::get('/settings', function () {
-    return inertia('Settings');
-});
+        return redirect('/users');
+    });
 
-Route::post('/logout', function () {
-    // dd('User logging out');
-    dd(request('foo'));
-});
+    Route::get('/settings', function () {
+        return inertia('Settings');
+    });
 
-Route::get('/test', function () {
-    return inertia('Test');
-});
+    Route::get('/test', function () {
+        return inertia('Test');
+    });
 
-// Cara Fajar
-// Route::inertia('/user-fajar', 'Student/All');
-Route::get('/user-fajar', function () {
-    $user = [
-        'name' => 'Ben',
-        'age' => 20
-    ];
-    // return Inertia::render('Student/All');
-    return inertia('Student/All', [
-        'user' => $user
-    ]);
+    // Cara Fajar
+    // Route::inertia('/user-fajar', 'Student/All');
+    Route::get('/user-fajar', function () {
+        $user = [
+            'name' => 'Ben',
+            'age' => 20
+        ];
+        // return Inertia::render('Student/All');
+        return inertia('Student/All', [
+            'user' => $user
+        ]);
+    });
 });
 
 Route::get('/gemini', function () {

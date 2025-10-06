@@ -68,6 +68,7 @@ import { Link, Head, router } from "@inertiajs/vue3";
 import { ref, watch } from "vue";
 import Pagination from "../../Shared/Pagination.vue";
 import Layout from "../../Shared/Layout.vue";
+import { debounce, throttle } from "lodash";
 
 let props = defineProps({
     users: Object,
@@ -76,7 +77,7 @@ let props = defineProps({
 
 let search = ref(props.filters.search);
 
-watch(search, (value) => {
+watch(search, debounce(function(value) {
     router.get(
         "/users",
         { search: value },
@@ -84,7 +85,7 @@ watch(search, (value) => {
         { replace: true },
         { preserveScroll: true }
     );
-});
+}, 300));
 
 defineOptions({ layout: Layout });
 </script>

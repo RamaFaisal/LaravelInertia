@@ -1,11 +1,11 @@
 <template>
     <Head title="Inertia" />
     <meta name="description" content="Inertia" />
-    <section class="p-6 bg-gray-200">
+    <section class="p-6 bg-four">
         <header class="flex justify-between p-2">
             <div class="flex items-center">
-                <h1 class="font-bold text-lg">Inertia</h1>
-                <p class="text-sm ml-3">Welcome Back, {{ user.name }}!!</p>
+                <h1 class="font-bold text-lg text-two">LaravelInertia</h1>
+                <p class="text-sm ml-3 text-two/75">Welcome Back, {{ user.name }}!!</p>
             </div>
             <Nav />
         </header>

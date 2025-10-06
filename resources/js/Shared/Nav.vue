@@ -7,7 +7,9 @@
                 >
             </li>
             <li>
-                <NavLink href="/users" :active="$page.component === 'Users'"
+                <NavLink
+                    href="/users"
+                    :active="$page.component === 'Users/Index'"
                     >Users</NavLink
                 >
             </li>
@@ -24,12 +26,8 @@
                 >
             </li>
             <li>
-                <Link
-                    href="/logout"
-                    method="post"
-                    :data="{ foo: 'bar' }"
-                    class="text-blue-500 hover:underline"
-                    >Log Out</Link
+                <NavLink href="/logout" :active="$page.component === 'Logout'"
+                    >Log Out</NavLink
                 >
             </li>
         </ul>
