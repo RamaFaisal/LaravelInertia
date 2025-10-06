@@ -56,7 +56,7 @@ function submit() {
                     </p>
                 </div>
 
-                <div class="flex items-center justify-between">
+                <!-- <div class="flex items-center justify-between">
                     <label class="flex items-center">
                         <input
                             type="checkbox"
@@ -71,7 +71,7 @@ function submit() {
                         class="text-sm text-indigo-600 hover:text-indigo-500"
                         >Forgot password?</a
                     >
-                </div>
+                </div> -->
 
                 <button
                     class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-lg transition-colors"
@@ -81,14 +81,14 @@ function submit() {
                 </button>
             </form>
 
-            <div class="mt-6 text-center text-sm text-gray-600">
+            <!-- <div class="mt-6 text-center text-sm text-gray-600">
                 Don't have an account?
                 <a
                     href="#"
                     class="text-indigo-600 hover:text-indigo-500 font-medium"
                     >Sign up</a
                 >
-            </div>
+            </div> -->
         </div>
     </div>
 </template>

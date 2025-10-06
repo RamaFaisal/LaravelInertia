@@ -6,6 +6,7 @@
 
             <div class="flex gap-2">
                 <Link
+                    v-if="can.createUser"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     href="/users/create"
                 >
@@ -46,7 +47,7 @@
                             {{ user.name }}
                         </th>
                         <td class="px-6 py-4">{{ user.email }}</td>
-                        <td class="px-6 py-4">
+                        <td v-if="user.can.edit" class="px-6 py-4">
                             <Link
                                 :href="`/users/${user.id}/edit`"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
@@ -73,19 +74,23 @@ import { debounce, throttle } from "lodash";
 let props = defineProps({
     users: Object,
     filters: Object,
+    can: Object,
 });
 
 let search = ref(props.filters.search);
 
-watch(search, debounce(function(value) {
-    router.get(
-        "/users",
-        { search: value },
-        { preserveState: true },
-        { replace: true },
-        { preserveScroll: true }
-    );
-}, 300));
+watch(
+    search,
+    debounce(function (value) {
+        router.get(
+            "/users",
+            { search: value },
+            { preserveState: true },
+            { replace: true },
+            { preserveScroll: true }
+        );
+    }, 300)
+);
 
 defineOptions({ layout: Layout });
 </script>

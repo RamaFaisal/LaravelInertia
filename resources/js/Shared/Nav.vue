@@ -1,6 +1,6 @@
 <template>
     <nav>
-        <ul class="flex space-x-2 list-inside list-none">
+        <ul class="flex space-x-4 list-inside list-none">
             <li>
                 <NavLink href="/" :active="$page.component === 'Welcome'"
                     >Home</NavLink
@@ -26,9 +26,7 @@
                 >
             </li>
             <li>
-                <NavLink href="/logout" :active="$page.component === 'Logout'"
-                    >Log Out</NavLink
-                >
+                <NavLink href="{{ route('logout') }}" method="post">Log Out</NavLink>
             </li>
         </ul>
     </nav>
